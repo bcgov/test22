@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bfc5f3-app-test
+spec:
+  destination:
+    name: ''
+    namespace: bfc5f3-test
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: charts/gitops
+    repoURL: 'git@github.com:bcgov-c/tenant-gitops-bfc5f3.git'
+    targetRevision: test
+    helm:
+      valueFiles:
+        - $values/deploy/test_values.yaml
+  project: bfc5f3
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
